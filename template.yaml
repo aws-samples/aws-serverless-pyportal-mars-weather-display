@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  mars-pyportal
+
+Globals:
+  Function:
+    Timeout: 3
+
+Parameters:
+  NasaApiKey:
+    Type: String
+    Default: 'DEMO_KEY'
+    Description: The API key for the NASA APIs.
+
+Resources:
+  FetchMarsDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          BUCKET: !Ref Bucket
+          NASA_API_KEY: !Ref NasaApiKey
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref Bucket
+      Events:
+        Mars:
+          Type: Api
+          Properties:
+            Path: /mars
+            Method: get
+  Bucket:
+      Type: AWS::S3::Bucket
+
+Outputs:
+  MarsApiUrl:
+    Description: "API GW endpoint"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/mars"
+  FetchMarsDataFunction:
+    Description: "function arn"
+    Value: !GetAtt FetchMarsDataFunction.Arn
+  MarsIamRole:
+    Description: "Implicit IAM Role created for function"
+    Value: !GetAtt MarsRole.Arn
+  S3Bucket:
+      Description: "S3 Bucket that images get uploaded to"
+      Value: !Ref Bucket
