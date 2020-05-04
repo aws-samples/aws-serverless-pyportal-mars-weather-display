@@ -51,7 +51,7 @@ except ImportError:
 interval_minutes = secrets['interval_minutes']
 wifi = adafruit_esp32spi_wifimanager.ESPSPI_WiFiManager(pyportal._esp, secrets, None)
 
-def invokeLambda(mars_api_url):
+def callAPIEndpoint(mars_api_url):
     headers = {"x-api-key": secrets['mars_api_key']}
     response = wifi.get(mars_api_url, headers=headers, timeout=30)
     data = response.json()
@@ -121,6 +121,6 @@ def showDisplay(insight, displayTime=60.0):
             pass
 
 while True:
-    data = invokeLambda(secrets['mars_api_url'])
+    data = callAPIEndpoint(secrets['mars_api_url'])
     downloadImage(data['image_url'])
     showDisplay(data['insight'], displayTime=60*interval_minutes)
