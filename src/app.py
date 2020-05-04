@@ -61,9 +61,10 @@ def getMarsInsightWeather():
         print(e)
         raise e
 
-def fetchRoverImage():
+# Request Rover photos from X number of days prior
+def getRoverPhotosByDay(dayOffset):
     try:
-        yesterday = date.today() - timedelta(days=1)
+        yesterday = date.today() - timedelta(days=dayOffset)
         yesterday = yesterday.strftime('20%y-%m-%d')
 
         response = requests.get(
@@ -75,12 +76,22 @@ def fetchRoverImage():
                 }
         ).json()
         photos = response['photos']
-        max = len(photos) - 1
-        url = photos[randint(0,max)]['img_src']
-        return url
+        return photos
     except requests.RequestException as e:
         print(e)
         raise e
+
+def fetchRoverImage():
+    length = 0
+    dayOffset = 1
+    photos = []
+    while length == 0:    
+        photos = getRoverPhotosByDay(dayOffset)
+        length = len(photos)
+        dayOffset = dayOffset + 1
+
+    url = photos[randint(0,length - 1)]['img_src']
+    return url
 
 def fetchImageData(url):
     try:

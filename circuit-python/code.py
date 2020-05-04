@@ -52,7 +52,8 @@ interval_minutes = secrets['interval_minutes']
 wifi = adafruit_esp32spi_wifimanager.ESPSPI_WiFiManager(pyportal._esp, secrets, None)
 
 def invokeLambda(mars_api_url):
-    response = wifi.get(mars_api_url, timeout=30)
+    headers = {"x-api-key": secrets['api_key']}
+    response = wifi.get(mars_api_url, headers=headers, timeout=30)
     data = response.json()
     print("JSON Response: ", data)
     response.close()
@@ -122,4 +123,4 @@ def showDisplay(insight, displayTime=60.0):
 while True:
     data = invokeLambda(secrets['mars_api_url'])
     downloadImage(data['image_url'])
-    showDisplay(data['insight'], displayTime=60*)
+    showDisplay(data['insight'], displayTime=60*interval_minutes)

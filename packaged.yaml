@@ -5,7 +5,7 @@ Description: 'mars-pyportal
   '
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 10
 Parameters:
   NasaApiKey:
     Type: String
@@ -23,7 +23,7 @@ Resources:
   FetchMarsDataFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://sar-apps-moheeb/b8dd0fea1a6fd0602acda4d72fd13e50
+      CodeUri: s3://sar-apps-moheeb/add281d889f890fa8903f8df46dc01a8
       Handler: app.lambda_handler
       Runtime: python3.8
       Environment:
@@ -50,7 +50,7 @@ Outputs:
   MarsApiUrl:
     Description: API GW endpoint
     Value:
-      Fn::Sub: https://${MarsApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/mars        
+      Fn::Sub: https://${MarsApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/mars       
   FetchMarsDataFunction:
     Description: function arn
     Value:
