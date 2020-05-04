@@ -23,7 +23,7 @@ Resources:
   FetchMarsDataFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://sar-apps-moheeb/add281d889f890fa8903f8df46dc01a8
+      CodeUri: s3://sar-apps-moheeb/e5cc7628409bac36bef879b338109ada
       Handler: app.lambda_handler
       Runtime: python3.8
       Environment:
