@@ -51,6 +51,10 @@ Outputs:
     Description: API GW endpoint
     Value:
       Fn::Sub: https://${MarsApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/mars       
+  MarsApiKey:
+    Description: Api key
+    Value:
+      Fn::Sub: https://${AWS::Region}.console.aws.amazon.com/apigateway/home?region=${AWS::Region}#/api-keys/${MarsApi.ApiKey}
   FetchMarsDataFunction:
     Description: function arn
     Value:
