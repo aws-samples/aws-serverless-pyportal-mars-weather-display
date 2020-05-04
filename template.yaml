@@ -14,6 +14,16 @@ Parameters:
     Description: The API key for the NASA APIs.
 
 Resources:
+
+  MarsApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        ApiKeyRequired: true 
+        UsagePlan:
+          CreateUsagePlan: PER_API
+
   FetchMarsDataFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -31,21 +41,20 @@ Resources:
         Mars:
           Type: Api
           Properties:
+            RestApiId: !Ref MarsApi
             Path: /mars
             Method: get
+  
   Bucket:
       Type: AWS::S3::Bucket
 
 Outputs:
   MarsApiUrl:
     Description: "API GW endpoint"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/mars"
+    Value: !Sub "https://${MarsApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/mars"
   FetchMarsDataFunction:
     Description: "function arn"
     Value: !GetAtt FetchMarsDataFunction.Arn
-  MarsIamRole:
-    Description: "Implicit IAM Role created for function"
-    Value: !GetAtt MarsRole.Arn
   S3Bucket:
       Description: "S3 Bucket that images get uploaded to"
       Value: !Ref Bucket
