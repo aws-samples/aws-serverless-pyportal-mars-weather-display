@@ -7,5 +7,5 @@ secrets = {
     'interval_minutes': 5, # The interval at which to make requests
     "timezone" : "America/Phoenix",
     "mars_api_url": "https://<>.execute-api.<>.amazonaws.com/Prod/mars",
-    "api_key": ""
+    "mars_api_key": ""
 }

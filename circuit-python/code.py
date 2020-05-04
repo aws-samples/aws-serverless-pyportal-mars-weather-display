@@ -52,7 +52,7 @@ interval_minutes = secrets['interval_minutes']
 wifi = adafruit_esp32spi_wifimanager.ESPSPI_WiFiManager(pyportal._esp, secrets, None)
 
 def invokeLambda(mars_api_url):
-    headers = {"x-api-key": secrets['api_key']}
+    headers = {"x-api-key": secrets['mars_api_key']}
     response = wifi.get(mars_api_url, headers=headers, timeout=30)
     data = response.json()
     print("JSON Response: ", data)
