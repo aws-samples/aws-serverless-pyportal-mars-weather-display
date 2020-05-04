@@ -85,7 +85,7 @@ def fetchRoverImage():
     length = 0
     dayOffset = 1
     photos = []
-    while length == 0:    
+    while length == 0:
         photos = getRoverPhotosByDay(dayOffset)
         length = len(photos)
         dayOffset = dayOffset + 1
